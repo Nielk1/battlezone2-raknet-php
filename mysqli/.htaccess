@@ -1,0 +1,3 @@
+<IfModule mod_rewrite.c>
+    RewriteRule ^testServer /index.php [QSA,L]
+</IfModule>

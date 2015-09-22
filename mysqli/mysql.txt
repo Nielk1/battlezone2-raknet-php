@@ -1,0 +1,54 @@
+Written for: v2.0
+
+If possible, you should create a database and
+user account dedicated to the BZ2 gamelist.
+Create a database named "bz2_gamelist", or if you have
+renamed $sqlDatabase in the php script use that.
+
+In the database, create a table called "gamelist".
+
+Create the following columns: (View text with a monospace font! (e.g. Fixedsys, Consolas)
+[COLUMN NAME]    |[DATA TYPE]    |[NOTE]        |[NOT NULL] |[DESCRIPTION]
+__lastUpdate     |bigint         |              |YES        |Unix timestamp of last POST sent by client.
+__timeoutSec     |int            |              |YES        |Seconds to wait for POST update, otherwise time out the game.
+__rowPW          |varchar(16)    |              |YES        |Authentication so others can't remove our game.
+__clientReqId    |bigint         |              |YES        |Client unique ID.
+__rowId          |bigint         |Primary Key.  |YES        |ID of row.
+__addr           |varchar(21)    |              |YES        |IP:Port
+gsoff            |tinyint        |DEFAULT: 0    |YES        |Flag to show/hide game.
+n                |varchar(256)   |              |YES        |Name of client game session.
+m                |varchar(68)    |              |YES        |Name of client map, no bzn extension.
+k                |tinyint        |              |           |Password Flag.
+d                |varchar(16)    |              |           |MODSLISTCRC_KEY
+t                |tinyint        |              |           |NATTYPE_KEY
+r                |varchar(16)    |              |           |PRIVATEADDRESS_KEY
+v                |varchar(8)     |              |           |GAMEVERSION_KEY
+p                |varchar(16)    |              |           |GAMEPORT_KEY
+
+You can keep this file for reference, or delete it.
+
+MySQL Command:
+USE bz2_gamelist;
+CREATE TABLE gamelist (
+__lastUpdate bigint(8) unsigned not null,
+__timeoutSec int(3) unsigned not null,
+__rowPW varchar(16) not null,
+__clientReqId bigint(8) unsigned not null,
+__rowId bigint(8) unsigned auto_increment primary key not null,
+__addr varchar(21) not null,
+gsoff tinyint(1) DEFAULT 0 not null,
+n varchar(256) not null,
+m varchar(68) not null,
+k tinyint(1),
+d varchar(16),
+t tinyint(1),
+r varchar(16),
+v varchar(8),
+p varchar(16)
+);
+
+CREATE TABLE proxycache (
+origin VARCHAR(50) NOT NULL,
+gettime DATETIME NOT NULL,
+cache TEXT NOT NULL
+);
